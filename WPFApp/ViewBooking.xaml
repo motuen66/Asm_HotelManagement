@@ -1,0 +1,108 @@
+﻿<Window x:Class="WPFApp.ManageBooking"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Booking Management" Height="500" Width="800">
+    <Grid Margin="0,0,0,-41">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="37*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Listbox to display booking list -->
+        <ListBox x:Name="BookingListBox" Height="483" VerticalAlignment="Top"
+            SelectionChanged="BookingListBox_SelectionChanged" HorizontalContentAlignment="Stretch" Margin="0,0,20,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="8" Padding="10" Background="Beige" Margin="0,0,0,10">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                            <!-- Reservation ID -->
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Booking Reservation ID: " FontWeight="SemiBold" Foreground="#555" />
+                                <TextBlock Text="{Binding BookingReservationId}" Foreground="#333" />
+                            </StackPanel>
+                            <!-- Total price -->
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Total Price: " FontWeight="SemiBold" Foreground="#555" />
+                                <TextBlock Text="{Binding TotalPrice}" Foreground="#333" />
+                            </StackPanel>
+
+                            <!-- Booking Status -->
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <TextBlock Text="Booking Status: " FontWeight="SemiBold" Foreground="#555" />
+                                <TextBlock Text="{Binding BookingStatus}" Foreground="#333" />
+                            </StackPanel>
+                            <Button Content="View Booking Details" Width="130" Height="30" Click="OpenDetailsPopup_Click" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <!-- Button for Booking operation -->
+        <Button Content="Booking Now" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,263,0,0" Width="156" Click="CreateBooking_Click" Grid.Column="1" RenderTransformOrigin="0.395,7.567"/>
+
+        <Button Content="Clear Form" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,222,0,0" Width="102" Click="Clear_Click" Grid.Column="1" RenderTransformOrigin="0.395,7.567"/>
+        <!-- Form for booking details -->
+        <TextBlock Text="Booking Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,46,0,0" Grid.Column="1"/>
+        <DatePicker x:Name="BookingDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Margin="115,38,0,0" Grid.Column="1"/>
+
+        <TextBlock Text="Total Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,89,0,0" Grid.Column="1"/>
+        <TextBox x:Name="TotalPriceTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="91,89,0,0" Grid.Column="1"/>
+        <TextBox x:Name="ActualPriceTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="460,348,0,0" Grid.Column="1"/>
+
+        <TextBlock Text="Customer ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,119,0,0" Grid.Column="1"/>
+        <TextBox x:Name="CustomerIDTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="91,119,0,0" Grid.Column="1"/>
+        <TextBox x:Name="BookingReservationIDTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="460,378,0,0" Grid.Column="1"/>
+
+        <TextBlock Text="Booking Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,149,0,0" Grid.Column="1"/>
+        <ComboBox x:Name="BookingStatusComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="91,149,0,0" Grid.Column="1">
+            <ComboBoxItem Content="Pending"/>
+            <ComboBoxItem Content="Confirmed"/>
+        </ComboBox>
+
+        <TextBlock Text="Room ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,184,0,0" Grid.Column="1"/>
+        <ComboBox x:Name="RoomIDComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="91,184,0,0" Grid.Column="1">
+            <ComboBoxItem Content="1" />
+            <ComboBoxItem Content="2" />
+            <ComboBoxItem Content="3" />
+            <ComboBoxItem Content="4" />
+            <ComboBoxItem Content="5" />
+        </ComboBox>
+
+        <!-- Popup with increased size -->
+        <Popup x:Name="BookingDetailsPopup" Placement="Mouse" StaysOpen="False" Width="400" Height="300">
+            <Border BorderBrush="Black" BorderThickness="2" Background="LightYellow" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Booking Details" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" />
+                    <ItemsControl ItemsSource="{Binding}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Room ID: " FontWeight="SemiBold" Foreground="#555" />
+                                        <TextBlock Text="{Binding RoomId}" Foreground="#333" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Start Date: " FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding StartDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="End Date: " FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding EndDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Actual Price: " FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding ActualPrice}" />
+                                    </StackPanel>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Content="Close" Click="CloseDetailsPopup_Click" HorizontalAlignment="Right" Width="40px" Height="25px" BorderBrush="AliceBlue"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Window>
